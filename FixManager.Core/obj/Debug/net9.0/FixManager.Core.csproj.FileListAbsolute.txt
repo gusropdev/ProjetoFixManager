@@ -1,0 +1,12 @@
+C:\dev\ProjetoFixManager\FixManager.Core\bin\Debug\net9.0\FixManager.Core.deps.json
+C:\dev\ProjetoFixManager\FixManager.Core\bin\Debug\net9.0\FixManager.Core.dll
+C:\dev\ProjetoFixManager\FixManager.Core\bin\Debug\net9.0\FixManager.Core.pdb
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.AssemblyInfoInputs.cache
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.AssemblyInfo.cs
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.csproj.CoreCompileInputs.cache
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.sourcelink.json
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.dll
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\refint\FixManager.Core.dll
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\FixManager.Core.pdb
+C:\dev\ProjetoFixManager\FixManager.Core\obj\Debug\net9.0\ref\FixManager.Core.dll

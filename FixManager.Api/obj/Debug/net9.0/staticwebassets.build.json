@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "TEJNarnaJfc0lBd9twdbgL7BDw3UHJi/inJqZ4Ilikc=",
+  "Source": "FixManager.Api",
+  "BasePath": "_content/FixManager.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
