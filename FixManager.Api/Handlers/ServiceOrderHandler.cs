@@ -46,17 +46,10 @@ public class ServiceOrderHandler (AppDbContext context) : IServiceOrderHandler
     public async Task<Response<ServiceOrder?>> UpdateAsync(UpdateServiceOrderRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<ServiceOrder?>(null, 400, "Validation failed.", errorMessages);
-        }
-
+        var errors = ServiceOrderService.ValidateUpdate(request);
+        if (errors.Count != 0)
+            return new Response<ServiceOrder?>(null, 400, "Validation failed", errors);
+        
         try
         {
             var serviceOrder = await context.ServiceOrders.FirstOrDefaultAsync(x => x.Id == request.Id);

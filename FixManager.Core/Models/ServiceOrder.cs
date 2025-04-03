@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using FixManager.Core.Enums;
 
 namespace FixManager.Core.Models;
 
@@ -6,7 +7,7 @@ public class ServiceOrder
 {
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public string Status { get; set; } = "Em análise";
+    public ServiceOrderStatus Status { get; set; } = ServiceOrderStatus.EmAnalise;
     public string ReportedIssue { get; set; } = string.Empty;
     public string Diagnosis { get; set; } = string.Empty;
     public decimal? EstimatedCost { get; set; }

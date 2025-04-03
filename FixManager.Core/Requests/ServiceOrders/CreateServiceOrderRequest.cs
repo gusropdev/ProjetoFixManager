@@ -5,7 +5,7 @@ namespace FixManager.Core.Requests.ServiceOrders;
 
 public class CreateServiceOrderRequest
 {
-    [Required(ErrorMessage = "O problema relatado é obrigatório.")]
+    [Required(ErrorMessage = "O problema relatado não pode estar vazio.")]
     [MaxLength(ErrorMessage = "O problema relatado deve ter no máximo 255 caracteres.")]
     public string ReportedIssue { get; set; } = string.Empty;
 

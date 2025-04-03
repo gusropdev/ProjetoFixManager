@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using FixManager.Core.Requests.ServiceOrders;
+using FixManager.Core.Requests.Customers;
 
 namespace FixManager.Api.Services;
 
-public abstract class ServiceOrderService
+public abstract class CustomerService
 {
-    public static List<string> ValidateCreation(CreateServiceOrderRequest request)
+    public static List<string> ValidateCreation(CreateCustomerRequest request)
     {
         var errors = new List<string>();
         var validationContext = new ValidationContext(request);
@@ -20,7 +20,7 @@ public abstract class ServiceOrderService
         return errors;
     }
     
-    public static List<string> ValidateUpdate(UpdateServiceOrderRequest request)
+    public static List<string> ValidateUpdate(UpdateCustomerRequest request)
     {
         var errors = new List<string>();
         var validationContext = new ValidationContext(request);

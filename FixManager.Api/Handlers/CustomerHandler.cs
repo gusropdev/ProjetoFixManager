@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FixManager.Api.Data;
+using FixManager.Api.Services;
 using FixManager.Core.Handlers;
 using FixManager.Core.Models;
 using FixManager.Core.Requests.Customers;
@@ -13,17 +14,10 @@ public class CustomerHandler(AppDbContext context) : ICustomerHandler
     public async Task<Response<Customer?>> CreateAsync(CreateCustomerRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<Customer?>(null, 400, "Validation failed.", errorMessages);
-        }
-
+        var errors = CustomerService.ValidateCreation(request);
+        if (errors.Count != 0)
+            return new Response<Customer?>(null, 400, "Validation failed", errors);
+        
         try
         {
             var customer = new Customer
@@ -46,16 +40,9 @@ public class CustomerHandler(AppDbContext context) : ICustomerHandler
     public async Task<Response<Customer?>> UpdateAsync(UpdateCustomerRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<Customer?>(null, 400, "Validation failed.", errorMessages);
-        }
+        var errors = CustomerService.ValidateUpdate(request);
+        if (errors.Count != 0)
+            return new Response<Customer?>(null, 400, "Validation failed", errors);
         
         try
         {

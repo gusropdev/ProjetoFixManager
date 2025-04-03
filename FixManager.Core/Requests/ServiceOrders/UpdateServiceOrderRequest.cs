@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using FixManager.Core.Enums;
 using FixManager.Core.Models;
 
 namespace FixManager.Core.Requests.ServiceOrders;
@@ -7,7 +8,8 @@ public class UpdateServiceOrderRequest
 {
     public int Id { get; set; }
     
-    public string Status { get; set; } = "Em análise.";
+    [EnumDataType(typeof(ServiceOrderStatus))]
+    public ServiceOrderStatus Status { get; set; }
     
     [Required(ErrorMessage = "O problema relatado é obrigatório.")]
     [MaxLength(ErrorMessage = "O problema relatado deve ter no máximo 255 caracteres.")]

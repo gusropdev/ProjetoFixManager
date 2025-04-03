@@ -13,11 +13,10 @@ public class ServiceOrderMapping : IEntityTypeConfiguration<ServiceOrder>
 
         builder.Property(x => x.CreatedAt)
             .IsRequired();
-        
+
         builder.Property(x => x.Status)
             .IsRequired()
-            .HasMaxLength(55)
-            .HasColumnType("VARCHAR");
+            .HasConversion<string>();
         
         builder.Property(x => x.ReportedIssue)
             .IsRequired()
