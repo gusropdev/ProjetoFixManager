@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FixManager.Api.Data;
+using FixManager.Api.Services;
 using FixManager.Core.Handlers;
 using FixManager.Core.Models;
 using FixManager.Core.Requests.ServiceOrders;
@@ -12,24 +13,17 @@ public class ServiceOrderHandler (AppDbContext context) : IServiceOrderHandler
 {
     public async Task<Response<ServiceOrder?>> CreateAsync(CreateServiceOrderRequest request)
     {
-        //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<ServiceOrder?>(null, 400, "Validation failed.", errorMessages);
-        }
+        //Validando a criação da ServiceOrder
+        var errors = ServiceOrderService.ValidateCreation(request);
+        if (errors.Count != 0)
+            return new Response<ServiceOrder?>(null, 400, "Validation failed", errors);
         
         var existingCustomer = await context.Customers.FindAsync(request.CustomerId);
         if (existingCustomer == null)
         {
-            return new Response<ServiceOrder?>(null, 404, "Service order not found.");
+            return new Response<ServiceOrder?>(null, 404, "Customer not found.");
         }
-
+ 
         try
         {
             var serviceOrder = new ServiceOrder

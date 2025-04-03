@@ -1,5 +1,6 @@
 using FixManager.Api.Data;
 using FixManager.Api.Handlers;
+using FixManager.Api.Services;
 using FixManager.Core;
 using FixManager.Core.Handlers;
 using Microsoft.EntityFrameworkCore;
@@ -34,5 +35,6 @@ public static class BuilderExtension
         builder.Services.AddTransient<IServiceOrderHandler, ServiceOrderHandler>();
         builder.Services.AddTransient<IDeviceHandler, DeviceHandler>();
         builder.Services.AddTransient<IPartHandler, PartHandler>();
+
     }
 }
