@@ -11,5 +11,6 @@ public class UpdatePartRequest
     public string Name { get; set; } = string.Empty;
     
     [DataType(DataType.Currency)]
+    [Required(ErrorMessage = "O preço da peça é obrigatório.")]
     public decimal? Price { get; set; }
 }

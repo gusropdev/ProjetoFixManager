@@ -2,9 +2,9 @@ namespace FixManager.Core.Enums;
 
 public enum ServiceOrderStatus
 {
-    EmAnalise,
-    AguardandoCliente,
-    AguardandoPecas,
-    Concluido,
-    Cancelado
+    EmAnalise = 1,
+    AguardandoCliente = 2,
+    AguardandoPecas = 3,
+    Concluido = 4,
+    Cancelado = 5
 }
