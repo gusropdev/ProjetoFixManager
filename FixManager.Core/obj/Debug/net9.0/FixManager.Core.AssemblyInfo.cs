@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FixManager.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4da88f249f00917b6f629af0ea681a14da66afb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d959c24194bf4afe7223d60b16d89a2ed6c195c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("FixManager.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FixManager.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
