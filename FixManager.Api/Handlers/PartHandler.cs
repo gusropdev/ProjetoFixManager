@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FixManager.Api.Data;
+using FixManager.Api.Services;
 using FixManager.Core.Handlers;
 using FixManager.Core.Models;
 using FixManager.Core.Requests.Parts;
@@ -13,17 +14,16 @@ public class PartHandler(AppDbContext context) : IPartHandler
     public async Task<Response<Part?>> CreateAsync(CreatePartRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
+        var errors = PartService.ValidateCreation(request);
+        if (errors.Count != 0)
+            return new Response<Part?>(null, 400, "Validation failed", errors);
+        
+        var existingServiceOrder = await context.ServiceOrders.FindAsync(request.ServiceOrderId);
+        if (existingServiceOrder == null)
         {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<Part?>(null, 400, "Validation failed.", errorMessages);
+            return new Response<Part?>(null, 404, "Service order not found.");
         }
-
+        
         try
         {
             var part = new Part
@@ -47,16 +47,9 @@ public class PartHandler(AppDbContext context) : IPartHandler
     public async Task<Response<Part?>> UpdateAsync(UpdatePartRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<Part?>(null, 400, "Validation failed.", errorMessages);
-        }
+        var errors = PartService.ValidateUpdate(request);
+        if (errors.Count != 0)
+            return new Response<Part?>(null, 400, "Validation failed", errors);
 
         try
         {

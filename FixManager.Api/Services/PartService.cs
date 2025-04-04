@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using FixManager.Core.Requests.Devices;
+using FixManager.Core.Requests.Parts;
 
 namespace FixManager.Api.Services;
 
-public abstract class DeviceService
+public class PartService
 {
-    public static List<string> ValidateCreation(CreateDeviceRequest request)
+    public static List<string> ValidateCreation(CreatePartRequest request)
     {
         var errors = new List<string>();
         var validationContext = new ValidationContext(request);
@@ -20,7 +20,7 @@ public abstract class DeviceService
         return errors;
     }
     
-    public static List<string> ValidateUpdate(UpdateDeviceRequest request)
+    public static List<string> ValidateUpdate(UpdatePartRequest request)
     {
         var errors = new List<string>();
         var validationContext = new ValidationContext(request);

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FixManager.Api.Data;
+using FixManager.Api.Services;
 using FixManager.Core.Handlers;
 using FixManager.Core.Models;
 using FixManager.Core.Requests.Devices;
@@ -13,16 +14,22 @@ public class DeviceHandler (AppDbContext context) : IDeviceHandler
     public async Task<Response<Device?>> CreateAsync(CreateDeviceRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
+        var errors = DeviceService.ValidateCreation(request);
+        if (errors.Count != 0)
+            return new Response<Device?>(null, 400, "Validation failed", errors);
 
-            return new Response<Device?>(null, 400, "Validation failed.", errorMessages);
-        }
+        var existingServiceOrder = await context.ServiceOrders
+            .Include(so => so.Device)
+            .FirstOrDefaultAsync(so => so.Id == request.ServiceOrderId);
+        
+        //Validando os dados no banco
+        //Validando se o ServiceOrder informado é existente
+        if (existingServiceOrder == null)
+            return new Response<Device?>(null, 404, "Service order not found", null);
+        
+        //Validando se já há um Device associado ao ServiceOrder
+        if(existingServiceOrder.Device != null)
+            return new Response<Device?>(existingServiceOrder.Device, 404, "This device order already has a device assigned", null);
 
         try
         {
@@ -49,16 +56,9 @@ public class DeviceHandler (AppDbContext context) : IDeviceHandler
     public async Task<Response<Device?>> UpdateAsync(UpdateDeviceRequest request)
     {
         //Validando os DataAnnotations declarados dentro do Request
-        var validationContext = new ValidationContext(request);
-        var validationResults = new List<ValidationResult>();
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
-        {
-            var errorMessages = validationResults
-                .Select(v => v.ErrorMessage ?? "Unknown validation error")
-                .ToList();
-
-            return new Response<Device?>(null, 400, "Validation failed.", errorMessages);
-        }
+        var errors = DeviceService.ValidateUpdate(request);
+        if (errors.Count != 0)
+            return new Response<Device?>(null, 400, "Validation failed", errors);
         
         try
         {
